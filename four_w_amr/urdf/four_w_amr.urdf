@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="four_w_amr">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.00132416201656352 -4.00565660888191E-05 0.093887625159828"
+        rpy="0 0 0" />
+      <mass
+        value="17.8411234664058" />
+      <inertia
+        ixx="0.328687588345585"
+        ixy="2.75858430566931E-06"
+        ixz="1.36193497080432E-09"
+        iyy="0.943624110989737"
+        iyz="-2.0065714008513E-05"
+        izz="1.20132457872936" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="front_left_link">
+    <inertial>
+      <origin
+        xyz="-5.61791044517701E-08 1.2103102539629E-07 -0.00662845703313497"
+        rpy="0 0 0" />
+      <mass
+        value="1.97267456623346" />
+      <inertia
+        ixx="0.0170661388139624"
+        ixy="3.38062083817817E-08"
+        ixz="6.07545764173623E-09"
+        iyy="0.0170661785645029"
+        iyz="-1.47796904219559E-08"
+        izz="0.0284885448647056" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/front_left_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/front_left_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_left_joint"
+    type="continuous">
+    <origin
+      xyz="-0.2115 -0.3575 0.038368"
+      rpy="-1.5708 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_left_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="15"
+      velocity="6" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="front_right_link">
+    <inertial>
+      <origin
+        xyz="5.6179104590548E-08 1.21031025403229E-07 0.00662845703313492"
+        rpy="0 0 0" />
+      <mass
+        value="1.97267456623345" />
+      <inertia
+        ixx="0.0170661388139623"
+        ixy="-3.38062084587242E-08"
+        ixz="6.0754576444626E-09"
+        iyy="0.0170661785645029"
+        iyz="1.47796904056695E-08"
+        izz="0.0284885448647054" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/front_right_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/front_right_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="front_right_joint"
+    type="continuous">
+    <origin
+      xyz="-0.2115 0.3575 0.038368"
+      rpy="-1.5708 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="front_right_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      effort="15"
+      velocity="6" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="back_right_link">
+    <inertial>
+      <origin
+        xyz="5.61791046460591E-08 1.21031025070162E-07 0.00662845703313508"
+        rpy="0 0 0" />
+      <mass
+        value="1.97267456623344" />
+      <inertia
+        ixx="0.0170661388139624"
+        ixy="-3.3806208436567E-08"
+        ixz="6.07545762905059E-09"
+        iyy="0.0170661785645027"
+        iyz="1.47796903984498E-08"
+        izz="0.0284885448647054" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/back_right_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/back_right_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_right_joint"
+    type="continuous">
+    <origin
+      xyz="0.2115 0.3575 0.038368"
+      rpy="-1.5708 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="back_right_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      effort="15"
+      velocity="6" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="back_left_link">
+    <inertial>
+      <origin
+        xyz="5.61791043407478E-08 1.21031025576701E-07 0.00662845703313508"
+        rpy="0 0 0" />
+      <mass
+        value="1.97267456623345" />
+      <inertia
+        ixx="0.0170661388139623"
+        ixy="-3.38062083903782E-08"
+        ixz="6.07545766614404E-09"
+        iyy="0.0170661785645028"
+        iyz="1.47796904238501E-08"
+        izz="0.0284885448647054" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/back_left_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/back_left_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="back_left_joint"
+    type="continuous">
+    <origin
+      xyz="0.2115 -0.3575 0.038368"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="back_left_link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      effort="15"
+      velocity="6" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="lidar_link">
+    <inertial>
+      <origin
+        xyz="1.23660133061199E-06 -8.84795212065957E-08 -0.0229335585473118"
+        rpy="0 0 0" />
+      <mass
+        value="0.102964031832174" />
+      <inertia
+        ixx="3.53904087980356E-05"
+        ixy="5.8993783465795E-14"
+        ixz="-1.54015899863962E-09"
+        iyy="3.53873606071173E-05"
+        iyz="2.08507446415272E-10"
+        izz="4.37195711738173E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/lidar_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.298039215686275 0.298039215686275 0.298039215686275 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/lidar_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lidar_joint"
+    type="continuous">
+    <origin
+      xyz="-0.33522 0 0.28431"
+      rpy="0 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="lidar_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      effort="1"
+      velocity="1" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+  <link
+    name="realsense_link">
+    <inertial>
+      <origin
+        xyz="-0.00802647627990055 0.000192368576515587 0.000102433817246436"
+        rpy="0 0 0" />
+      <mass
+        value="0.0200496143535985" />
+      <inertia
+        ixx="1.51661130781659E-05"
+        ixy="1.97324525450553E-09"
+        ixz="-4.68000006067364E-09"
+        iyy="1.55788303975685E-06"
+        iyz="1.44223594502936E-08"
+        izz="1.39532379059951E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/realsense_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/realsense_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="realsense_joint"
+    type="fixed">
+    <origin
+      xyz="-0.40975 0 0.112"
+      rpy="0 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="realsense_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="top_plate_link">
+    <inertial>
+      <origin
+        xyz="5.55111512312578E-17 1.42910579648926E-17 -0.00100000000000003"
+        rpy="0 0 0" />
+      <mass
+        value="0.0112364696805726" />
+      <inertia
+        ixx="7.96956397299821E-06"
+        ixy="7.61358133759553E-21"
+        ixz="1.07395448339795E-21"
+        iyy="2.69451472759011E-06"
+        iyz="-1.16024066035317E-21"
+        izz="1.06565877208013E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/top_plate_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://four_w_amr/meshes/top_plate_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="top_plate_joint"
+    type="fixed">
+    <origin
+      xyz="-0.331046700913836 0 0.243009667991878"
+      rpy="0 0 3.14159265358979" />
+    <parent
+      link="base_link" />
+    <child
+      link="top_plate_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>
