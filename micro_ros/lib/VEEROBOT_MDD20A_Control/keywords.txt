@@ -1,0 +1,23 @@
+
+#######################################
+# Syntax Coloring Map For CytronMotorDriver
+#######################################
+# Class
+#######################################
+
+CytronMotorDriver	KEYWORD1
+
+#######################################
+# Methods and Functions
+#######################################	
+
+setSpeed		KEYWORD2
+brake			KEYWORD2
+
+
+#######################################
+# Constants
+#######################################
+
+_pwmPin		LITERAL1
+_dirPin		LITERAL1
