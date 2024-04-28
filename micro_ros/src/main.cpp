@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <Adafruit_MotorShield.h>
 #include <VEE_CytronMotorDriver.h>
 #include <Wire.h>
 #include <FastLED.h>
@@ -67,17 +66,17 @@ enum states
 #define LED_INDICATOR 12
 #define RGB_LED 13
 
-const int HALLSEN_A = 25; // Hall sensor A connected to pin 3 (external interrupt)
-const int HALLSEN_B = 26; // Hall sensor A connected to pin 3 (external interrupt)
+const int HALLSEN_A = 26; // Hall sensor A connected to pin 3 (external interrupt)
+const int HALLSEN_B = 25; // Hall sensor A connected to pin 3 (external interrupt)
 
-const int HALLSEN_A2 = 32; // Hall sensor A connected to pin 3 (external interrupt)
-const int HALLSEN_B2 = 33; // Hall sensor A connected to pin 3 (external interrupt)
+const int HALLSEN_A2 = 33; // Hall sensor A connected to pin 3 (external interrupt)
+const int HALLSEN_B2 = 32; // Hall sensor A connected to pin 3 (external interrupt)
 
-const int HALLSEN_A3 = 34; // Hall sensor A connected to pin 3 (external interrupt)
-const int HALLSEN_B3 = 35; // Hall sensor A connected to pin 3 (external interrupt)
+const int HALLSEN_A3 = 35; // Hall sensor A connected to pin 3 (external interrupt)
+const int HALLSEN_B3 = 34; // Hall sensor A connected to pin 3 (external interrupt)
 
-const int HALLSEN_A4 = 39; // Hall sensor A connected to pin 3 (external interrupt)
-const int HALLSEN_B4 = 36; // Hall sensor A connected to pin 3 (external interrupt)
+const int HALLSEN_A4 = 36; // Hall sensor A connected to pin 3 (external interrupt)
+const int HALLSEN_B4 = 39; // Hall sensor A connected to pin 3 (external interrupt)
 
 volatile long encoderValue1 = 0;
 volatile long encoderValue2 = 0;
@@ -101,8 +100,8 @@ int rpm4 = 0;
 int PWM_MIN = -250; // Minimum PWM value
 int PWM_MAX = 250;  // Maximum PWM value
 
-const float RPM_MIN = -60.0; // Minimum RPM value
-const float RPM_MAX = 60.0;  // Maximum RPM value
+const float RPM_MIN = -50.0; // Minimum RPM value
+const float RPM_MAX = 50.0;  // Maximum RPM value
 
 float error1 = 0.0;
 float error2 = 0.0;
@@ -199,10 +198,10 @@ void setMotorSpeed(int motor, int spd)
 
 void setMotorSpeeds(int frontLeftSpeed, int frontRightSpeed, int backRightSpeed, int backLeftSpeed)
 {
-  setMotorSpeed(FRONTLEFT, constrain(frontLeftSpeed, PWM_MIN, PWM_MAX));
-  setMotorSpeed(FRONTRIGHT, -constrain(frontRightSpeed, PWM_MIN, PWM_MAX));
-  setMotorSpeed(BACKRIGHT, -constrain(backRightSpeed, PWM_MIN, PWM_MAX));
-  setMotorSpeed(BACKLEFT, constrain(backLeftSpeed, PWM_MIN, PWM_MAX));
+  setMotorSpeed(FRONTLEFT, -constrain(frontLeftSpeed, PWM_MIN, PWM_MAX));
+  setMotorSpeed(FRONTRIGHT, constrain(frontRightSpeed, PWM_MIN, PWM_MAX));
+  setMotorSpeed(BACKRIGHT, constrain(backRightSpeed, PWM_MIN, PWM_MAX));
+  setMotorSpeed(BACKLEFT, -constrain(backLeftSpeed, PWM_MIN, PWM_MAX));
 }
 
 // Callback function for handling pwml messages
@@ -241,34 +240,34 @@ void initMotorController()
   pinMode(HALLSEN_A4, INPUT);
   pinMode(HALLSEN_B4, INPUT);
 
-/*
-  setMotorSpeeds(100, 100, 100, 100);
-  delay(3000);
-  setMotorSpeeds(0, 0, 0, 0);
-
-  Serial.print("Encoder1 : ");
-  Serial.print(encoderValue1);
-  Serial.print(" Encoder2 : ");
-  Serial.print(encoderValue2);
-  Serial.print(" Encoder3 : ");
-  Serial.print(encoderValue3);
-  Serial.print(" Encoder4 : ");
-  Serial.println(encoderValue4);
-
-  delay(100);
-  setMotorSpeeds(-100, -100, -100, -100);
-  delay(3000);
-  setMotorSpeeds(0, 0, 0, 0);
   
-  Serial.print("Encoder1 : ");
-  Serial.print(encoderValue1);
-  Serial.print(" Encoder2 : ");
-  Serial.print(encoderValue2);
-  Serial.print(" Encoder3 : ");
-  Serial.print(encoderValue3);
-  Serial.print(" Encoder4 : ");
-  Serial.println(encoderValue4);
-  */
+    // setMotorSpeeds(100, 100, 100, 100);
+    // delay(6000);
+    // setMotorSpeeds(0, 0, 0, 0);
+
+    // Serial.print("Encoder1 : ");
+    // Serial.print(encoderValue1);
+    // Serial.print(" Encoder2 : ");
+    // Serial.print(encoderValue2);
+    // Serial.print(" Encoder3 : ");
+    // Serial.print(encoderValue3);
+    // Serial.print(" Encoder4 : ");
+    // Serial.println(encoderValue4);
+
+    // delay(100);
+    // setMotorSpeeds(-100, -100, -100, -100);
+    // delay(6000);
+    // setMotorSpeeds(0, 0, 0, 0);
+
+    // Serial.print("Encoder1 : ");
+    // Serial.print(encoderValue1);
+    // Serial.print(" Encoder2 : ");
+    // Serial.print(encoderValue2);
+    // Serial.print(" Encoder3 : ");
+    // Serial.print(encoderValue3);
+    // Serial.print(" Encoder4 : ");
+    // Serial.println(encoderValue4);
+    
 }
 
 void updateEncoder1()
