@@ -118,7 +118,7 @@ ros2 launch four_w_amr_nav2 navigation_launch.py
 ros2 launch four_w_amr lidar.launch.py
 ros2 launch four_w_amr bringup.launch.py
 ros2 launch realsense2_camera rs_launch.py depth_module.depth_profile:=1280x720x30 pointcloud.enable:=true
-Refer : https://github.com/IntelRealSense/realsense-ros?tab=readme-ov-file#installation-on-ubuntu for realsense params
+# Refer : https://github.com/IntelRealSense/realsense-ros?tab=readme-ov-file#installation-on-ubuntu for realsense params
 
 ```
 
