@@ -68,6 +68,15 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
 
+## Realsense (if used)
+Follow the details in https://github.com/IntelRealSense/realsense-ros?tab=readme-ov-file#installation-on-ubuntu to install Realsense package and drivers.
+Once done, add user to user group and give permissions.
+```bash
+sudo usermod -aG video <username>
+sudo chmod o+rw /dev/video*
+ls -l /dev/video* # to check permissions
+```
+
 ## Platformio
 Install Platforio on vscode and Upload micro_ros firmware in esp32 (**in micro_ros package**)
 [Platformio Installation Guide](https://www.youtube.com/watch?v=MeIcL9igsbM)
