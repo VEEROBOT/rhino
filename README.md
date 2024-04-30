@@ -113,5 +113,5 @@ ros2 launch four_w_amr lidar.launch.py
 **On Host machine**
 ```bash
 ros2 launch four_w_amr display.launch.py
-ros2 launch four_w_amr_nav2 navigation_launch.py
+ros2 launch realsense2_camera rs_launch.py depth_module.depth_profile:=1280x720x30 pointcloud.enable:=true
 ```
