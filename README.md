@@ -25,6 +25,7 @@
       # Add the following lines to the end of the file
       source /opt/ros/humble/setup.bash
       source ~/your_workspace_name/install/setup.bash
+      export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
       ```
 
       Replace `your_workspace_name` with the name of your workspace.
