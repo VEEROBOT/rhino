@@ -44,6 +44,8 @@ enum states
   AGENT_DISCONNECTED
 } state;
 
+bool agentConnectFlag = 0;
+
 //   ##################################################################
 
 // Motor pin definitions
@@ -136,13 +138,169 @@ VEE_CytronMotorDriver backLeftMotor(MOTOR_PWM_PIN_4, MOTOR_DIR_PIN_4, MOTOR_LEDC
 #define SCL_1 22
 
 /*RGB LED Constants*/
-#define NUM_LEDS 10
+#define NUM_LEDS 15
 #define LED_PIN 13 // Example pin number, change this to your actual pin number
+#define speakerPin 12
 CRGB leds[NUM_LEDS];
-int rightIndices[] = {0, 1, 2, 3, 4}; // Global array for LED indices
-int leftIndices[] = {5, 6, 7, 8, 9};  // Global array for LED indices
 
-void fillLED(CRGB color, int *indices, int numIndices)
+int rightIndices[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}; // Global array for LED indices
+int leftIndices[] = {10, 11, 12, 13, 14};            // Global array for LED indices
+
+const int leftLEDBrightness = 250;
+const int rightLEDBrightness = 250;
+
+// Define the musical notes as frequencies (in hertz)
+#define NOTE_B0 31
+#define NOTE_C1 33
+#define NOTE_CS1 35
+#define NOTE_D1 37
+#define NOTE_DS1 39
+#define NOTE_E1 41
+#define NOTE_F1 44
+#define NOTE_FS1 46
+#define NOTE_G1 49
+#define NOTE_GS1 52
+#define NOTE_A1 55
+#define NOTE_AS1 58
+#define NOTE_B1 62
+#define NOTE_C2 65
+#define NOTE_CS2 69
+#define NOTE_D2 73
+#define NOTE_DS2 78
+#define NOTE_E2 82
+#define NOTE_F2 87
+#define NOTE_FS2 93
+#define NOTE_G2 98
+#define NOTE_GS2 104
+#define NOTE_A2 110
+#define NOTE_AS2 117
+#define NOTE_B2 123
+#define NOTE_C3 131
+#define NOTE_CS3 139
+#define NOTE_D3 147
+#define NOTE_DS3 156
+#define NOTE_E3 165
+#define NOTE_F3 175
+#define NOTE_FS3 185
+#define NOTE_G3 196
+#define NOTE_GS3 208
+#define NOTE_A3 220
+#define NOTE_AS3 233
+#define NOTE_B3 247
+#define NOTE_C4 262
+#define NOTE_CS4 277
+#define NOTE_D4 294
+#define NOTE_DS4 311
+#define NOTE_E4 330
+#define NOTE_F4 349
+#define NOTE_FS4 370
+#define NOTE_G4 392
+#define NOTE_GS4 415
+#define NOTE_A4 440
+#define NOTE_AS4 466
+#define NOTE_B4 494
+#define NOTE_C5 523
+#define NOTE_CS5 554
+#define NOTE_D5 587
+#define NOTE_DS5 622
+#define NOTE_E5 659
+#define NOTE_F5 698
+#define NOTE_FS5 740
+#define NOTE_G5 784
+#define NOTE_GS5 831
+#define NOTE_A5 880
+#define NOTE_AS5 932
+#define NOTE_B5 988
+#define NOTE_C6 1047
+#define NOTE_CS6 1109
+#define NOTE_D6 1175
+#define NOTE_DS6 1245
+#define NOTE_E6 1319
+#define NOTE_F6 1397
+#define NOTE_FS6 1480
+#define NOTE_G6 1568
+#define NOTE_GS6 1661
+#define NOTE_A6 1760
+#define NOTE_AS6 1865
+#define NOTE_B6 1976
+#define NOTE_C7 2093
+#define NOTE_CS7 2217
+#define NOTE_D7 2349
+#define NOTE_DS7 2489
+#define NOTE_E7 2637
+#define NOTE_F7 2794
+#define NOTE_FS7 2960
+#define NOTE_G7 3136
+#define NOTE_GS7 3322
+#define NOTE_A7 3520
+#define NOTE_AS7 3729
+#define NOTE_B7 3951
+#define NOTE_C8 4186
+#define NOTE_CS8 4435
+#define NOTE_D8 4699
+#define NOTE_DS8 4978
+
+// Define note durations
+#define DURATION_QUARTER 200
+#define DURATION_HALF 400
+#define DURATION_WHOLE 800
+
+// Function to play a note by toggling the speaker pin
+void playNote(int note, int duration)
+{
+  unsigned long period = 1000000UL / note;          // Calculate the period of the note in microseconds
+  unsigned long durationMicros = duration * 1000UL; // Convert duration from milliseconds to microseconds
+  unsigned long startTime = micros();               // Get the current time
+
+  while (micros() - startTime < durationMicros)
+  {
+    digitalWrite(speakerPin, HIGH); // Turn the speaker on
+    delayMicroseconds(period / 2);  // Wait for half of the period
+    digitalWrite(speakerPin, LOW);  // Turn the speaker off
+    delayMicroseconds(period / 2);  // Wait for the other half of the period
+  }
+}
+
+// Function to play a melody
+void playMelody(int melody[], int durations[], int melodyLength)
+{
+  for (int i = 0; i < melodyLength; i++)
+  {
+    playNote(melody[i], durations[i]);
+    delay(50); // Add a small delay between notes
+  }
+}
+
+// Function to stop the melody
+void stopMelody()
+{
+  int melody[] = {NOTE_C4, NOTE_B3, NOTE_A3, NOTE_G3, NOTE_F3}; // Descending note sequence
+  int durations[] = {200, 200, 200, 200, 200};                  // Durations in milliseconds for each note
+
+  for (int i = 0; i < sizeof(melody) / sizeof(int); i++)
+  {
+    playNote(melody[i], durations[i]);
+    delay(50); // Add a small delay between notes
+  }
+}
+
+// Function to play the start music from Contra
+void contraStartMusic()
+{
+  int melody[] = {NOTE_E4, NOTE_G4, NOTE_E5, NOTE_C5, NOTE_D5, NOTE_G5, NOTE_E5, NOTE_G5, NOTE_A5, NOTE_B5};
+  int durations[] = {100, 100, 100, 100, 100, 100, 100, 100, 100, 450}; // reduced durations in milliseconds
+  playMelody(melody, durations, 10);
+}
+
+// Function to play the robot ready signal
+void robotReadySignal()
+{
+  int melody[] = {NOTE_C5, NOTE_E5, NOTE_G5, NOTE_C6}; // Ascending chime notes
+  int durations[] = {150, 150, 150, 450};              // Durations in milliseconds
+  playMelody(melody, durations, 4);
+}
+
+void fillLED(CRGB color, int *indices, int numIndices, uint8_t brightness)
 {
   for (int i = 0; i < NUM_LEDS; i++)
   {
@@ -153,6 +311,7 @@ void fillLED(CRGB color, int *indices, int numIndices)
     if (indices[i] >= 0 && indices[i] < NUM_LEDS)
     {
       leds[indices[i]] = color;
+      leds[indices[i]].fadeToBlackBy(255 - brightness); // Adjust brightness
     }
   }
   FastLED.show(); // Show the LEDs after updating
@@ -202,6 +361,28 @@ void setMotorSpeeds(int frontLeftSpeed, int frontRightSpeed, int backRightSpeed,
   setMotorSpeed(FRONTRIGHT, constrain(frontRightSpeed, PWM_MIN, PWM_MAX));
   setMotorSpeed(BACKRIGHT, constrain(backRightSpeed, PWM_MIN, PWM_MAX));
   setMotorSpeed(BACKLEFT, -constrain(backLeftSpeed, PWM_MIN, PWM_MAX));
+
+  /*  float speedThreshold = 10; // Adjust as needed for a comfortable margin of error
+
+    if (abs(frontLeftSpeed - frontRightSpeed) <= speedThreshold)
+    {
+      // The speed difference is within the threshold, consider them equal
+      fillLED(CRGB::Black, rightIndices, sizeof(rightIndices) / sizeof(rightIndices[0]),leftLEDBrightness);
+      fillLED(CRGB::Black, leftIndices, sizeof(leftIndices) / sizeof(leftIndices[0]),rightLEDBrightness);
+    }
+    else if (frontLeftSpeed > frontRightSpeed)
+    {
+      // Moving right
+      fillLED(CRGB::Orange, rightIndices, sizeof(rightIndices) / sizeof(rightIndices[0]),leftLEDBrightness);
+      fillLED(CRGB::Black, leftIndices, sizeof(leftIndices) / sizeof(leftIndices[0]),rightLEDBrightness);
+    }
+    else
+    {
+      // Moving left
+      fillLED(CRGB::Black, rightIndices, sizeof(rightIndices) / sizeof(rightIndices[0]),leftLEDBrightness);
+      fillLED(CRGB::Orange, leftIndices, sizeof(leftIndices) / sizeof(leftIndices[0]),rightLEDBrightness);
+    }
+    */
 }
 
 // Callback function for handling pwml messages
@@ -240,34 +421,32 @@ void initMotorController()
   pinMode(HALLSEN_A4, INPUT);
   pinMode(HALLSEN_B4, INPUT);
 
-  
-    // setMotorSpeeds(100, 100, 100, 100);
-    // delay(6000);
-    // setMotorSpeeds(0, 0, 0, 0);
+  // setMotorSpeeds(100, 100, 100, 100);
+  // delay(6000);
+  // setMotorSpeeds(0, 0, 0, 0);
 
-    // Serial.print("Encoder1 : ");
-    // Serial.print(encoderValue1);
-    // Serial.print(" Encoder2 : ");
-    // Serial.print(encoderValue2);
-    // Serial.print(" Encoder3 : ");
-    // Serial.print(encoderValue3);
-    // Serial.print(" Encoder4 : ");
-    // Serial.println(encoderValue4);
+  // Serial.print("Encoder1 : ");
+  // Serial.print(encoderValue1);
+  // Serial.print(" Encoder2 : ");
+  // Serial.print(encoderValue2);
+  // Serial.print(" Encoder3 : ");
+  // Serial.print(encoderValue3);
+  // Serial.print(" Encoder4 : ");
+  // Serial.println(encoderValue4);
 
-    // delay(100);
-    // setMotorSpeeds(-100, -100, -100, -100);
-    // delay(6000);
-    // setMotorSpeeds(0, 0, 0, 0);
+  // delay(100);
+  // setMotorSpeeds(-100, -100, -100, -100);
+  // delay(6000);
+  // setMotorSpeeds(0, 0, 0, 0);
 
-    // Serial.print("Encoder1 : ");
-    // Serial.print(encoderValue1);
-    // Serial.print(" Encoder2 : ");
-    // Serial.print(encoderValue2);
-    // Serial.print(" Encoder3 : ");
-    // Serial.print(encoderValue3);
-    // Serial.print(" Encoder4 : ");
-    // Serial.println(encoderValue4);
-    
+  // Serial.print("Encoder1 : ");
+  // Serial.print(encoderValue1);
+  // Serial.print(" Encoder2 : ");
+  // Serial.print(encoderValue2);
+  // Serial.print(" Encoder3 : ");
+  // Serial.print(encoderValue3);
+  // Serial.print(" Encoder4 : ");
+  // Serial.println(encoderValue4);
 }
 
 void updateEncoder1()
@@ -469,6 +648,8 @@ void setup()
   delay(10);
   pinMode(LED_INDICATOR, OUTPUT);
   FastLED.addLeds<WS2812B, LED_PIN, GRB>(leds, NUM_LEDS);
+  pinMode(speakerPin, OUTPUT); // Set the speaker pin as an output
+  contraStartMusic();
   FastLED.setBrightness(25); // Set brightness to 100 (0-255 range)
 
   set_microros_serial_transports(Serial);
@@ -623,20 +804,24 @@ void loop()
 
   if (state == WAITING_AGENT)
   {
-    digitalWrite(LED_INDICATOR, HIGH);
-    fillLED(CRGB::OrangeRed, rightIndices, sizeof(rightIndices) / sizeof(rightIndices[0]));
-    fillLED(CRGB::OrangeRed, leftIndices, sizeof(leftIndices) / sizeof(leftIndices[0]));
+    // digitalWrite(LED_INDICATOR, HIGH);
+    fillLED(CRGB::Blue, leftIndices, sizeof(leftIndices) / sizeof(leftIndices[0]), leftLEDBrightness);
+    fillLED(CRGB::Blue, rightIndices, sizeof(rightIndices) / sizeof(rightIndices[0]), rightLEDBrightness);
     delay(10);
-    digitalWrite(LED_INDICATOR, LOW);
-    fillLED(CRGB::Black, rightIndices, sizeof(rightIndices) / sizeof(rightIndices[0]));
-    fillLED(CRGB::Black, leftIndices, sizeof(leftIndices) / sizeof(leftIndices[0]));
+    // digitalWrite(LED_INDICATOR, LOW);
+    fillLED(CRGB::Black, leftIndices, sizeof(leftIndices) / sizeof(leftIndices[0]), leftLEDBrightness);
+    fillLED(CRGB::Black, rightIndices, sizeof(rightIndices) / sizeof(rightIndices[0]), rightLEDBrightness);
   }
 
   if (state == AGENT_CONNECTED)
   {
-    digitalWrite(LED_INDICATOR, LOW);
-    fillLED(CRGB::Black, rightIndices, sizeof(rightIndices) / sizeof(rightIndices[0]));
-    fillLED(CRGB::Black, leftIndices, sizeof(leftIndices) / sizeof(leftIndices[0]));
+    // digitalWrite(LED_INDICATOR, LOW);
+    if (agentConnectFlag == 0)
+    {
+      fillLED(CRGB::Green, leftIndices, sizeof(leftIndices) / sizeof(leftIndices[0]), leftLEDBrightness);
+      fillLED(CRGB::Green, rightIndices, sizeof(rightIndices) / sizeof(rightIndices[0]), rightLEDBrightness);
+      agentConnectFlag = 1;
+    }
 
     rclc_executor_spin_some(&executor, RCL_MS_TO_NS(100));
 
@@ -649,9 +834,9 @@ void loop()
 
   if (state == AGENT_DISCONNECTED)
   {
-    digitalWrite(LED_INDICATOR, HIGH);
-    fillLED(CRGB::OrangeRed, rightIndices, sizeof(rightIndices) / sizeof(rightIndices[0]));
-    fillLED(CRGB::OrangeRed, leftIndices, sizeof(leftIndices) / sizeof(leftIndices[0]));
+    //  digitalWrite(LED_INDICATOR, HIGH);
+    fillLED(CRGB::OrangeRed, leftIndices, sizeof(leftIndices) / sizeof(leftIndices[0]), leftLEDBrightness);
+    fillLED(CRGB::OrangeRed, rightIndices, sizeof(rightIndices) / sizeof(rightIndices[0]), rightLEDBrightness);
 
     setMotorSpeeds(0, 0, 0, 0);
     memset(encoderdata, 0, sizeof(encoderdata));
