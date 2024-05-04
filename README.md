@@ -105,6 +105,7 @@ ros2 run nav2_map_server map_saver_cli -f map
 ```bash
 ros2 launch four_w_amr bringup.launch.py
 ros2 launch four_w_amr lidar.launch.py
+ros2 launch four_w_amr lidar.launch.py scan_mode:=DenseBoost #for outdoor. Range upto 40m
 ```
 
 **On Host machine**
