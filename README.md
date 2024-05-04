@@ -31,7 +31,7 @@
       Replace `your_workspace_name` with the name of your workspace.
 
 3. **Install ROS Navigation Stack Package:**
-   - Install the ROS Navigation stack package along with other dependencies using the following command:
+   - Install the ROS Navigation stack package along with other dependencies using the following command. rplidar-ros-* is required if using A1:
 
       ```bash
       sudo apt install ros-humble-navigation2 ros-humble-nav2-bringup ros-humble-xacro  ros-humble-rviz2 ros-humble-tf-transformations ros-humble-joint-state-publisher ros-humble-robot-state-publisher ros-humble-tf2-* ros-humble-slam-toolbox ros-humble-rplidar-ros-* 
@@ -39,6 +39,8 @@
       ```bash
       sudo pip install transform3d
       ```
+
+ 4. **Install RPLIDAR package if using RPLidar C1 lidar. Make sure ros-humble-rplidar-ros-* is not installed, or removed if installed. Also change baudrate to 460800 from 115200
 ## Micro_ROS Setup
 
 Follow this link to install the Micro_ROS agent on the host: [Micro_ROS Installation Guide](https://micro.ros.org/docs/tutorials/core/first_application_linux/)
