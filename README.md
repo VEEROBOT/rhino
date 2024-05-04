@@ -70,7 +70,7 @@ sudo udevadm trigger
 
 ## Realsense (if used)
 Follow the details in https://github.com/IntelRealSense/realsense-ros?tab=readme-ov-file#installation-on-ubuntu to install Realsense package and drivers.
-Once done, add user to user group and give permissions.
+Once done, add user to user group and give permissions. Also make sure to create 80-movidius.rules in /etc/udev/rules.d
 ```bash
 sudo usermod -aG video <username>
 sudo chmod o+rw /dev/video*
